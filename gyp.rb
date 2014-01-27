@@ -10,7 +10,7 @@ require 'getoptlong'
 
 # Parse the logs table and extract only the cache finds.
 def parse_file io
-  Nokogiri.HTML(io).css('table')[1].children.map { |tr_elem|
+  Nokogiri.HTML(io).css('table')[1].css('tr').map { |tr_elem|
     if tr_elem.css('img').first['title'].to_s.downcase == 'found it'
       td_elems = tr_elem.css 'td'
 
