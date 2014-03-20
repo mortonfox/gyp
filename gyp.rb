@@ -2,7 +2,7 @@
 # in a format suitable for posting to Livejournal.
 #
 # Author: Po Shan Cheah http://mortonfox.com
-# Last updated: January 21, 2014
+# Last updated: March 19, 2014
 
 require 'nokogiri'
 require 'date'
@@ -125,14 +125,21 @@ EOM
 opts = GetoptLong.new(
   [ '--help', '-h', GetoptLong::NO_ARGUMENT ]
 )
+opts.quiet = true
 
-opts.each { |opt, arg|
-  case opt
-  when '--help'
-    puts USAGE
-    exit 0
-  end
-}
+begin
+  opts.each { |opt, arg|
+    case opt
+    when '--help'
+      puts USAGE
+      exit 0
+    end
+  }
+rescue GetoptLong::Error => err
+  $stderr.puts "Error from GetoptLong: #{err}"
+  $stderr.puts USAGE
+  exit 1
+end
 
 input_file, start_date_str, end_date_str = ARGV
 start_date, end_date = get_date_range start_date_str, end_date_str
