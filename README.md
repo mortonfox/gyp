@@ -18,10 +18,11 @@ First, log in to geocaching.com and download the "Your Profile" page at http://w
 Then run the script on it:
 
     ruby gyp.rb yourprofile.htm
-    
-By default, the script will extract the geocache finds from the most recent full weekend. (Saturday and Sunday)
+
+By default, the script will extract the geocache finds from the most recent
+full weekend. (Saturday and Sunday)
 However, you can also specify a date range. For example:
 
     ruby gyp.rb yourprofile.htm 2014-01-01 2014-01-07
-    
+
 <!-- vim: set tw=0 -->
