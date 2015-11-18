@@ -10,7 +10,7 @@ require 'getoptlong'
 
 # Parse the logs table and extract only the cache finds.
 def parse_file io
-  found_strings = [ 'found it', 'attended' ]
+  found_strings = ['found it', 'attended']
   Nokogiri.HTML(io).css('table')[1].css('tr').map { |tr_elem|
     if found_strings.include? tr_elem.css('img').first['title'].to_s.downcase
       td_elems = tr_elem.css 'td'
@@ -30,8 +30,7 @@ def parse_file io
         state: state,
         link: cache_link
       }
-    else
-      nil
+      # else nil
     end
   }.compact.reverse
 end
@@ -93,7 +92,7 @@ def get_date_range start_date_str, end_date_str
   # For sake of sanity, swap date range if reversed.
   start_date, end_date = end_date, start_date if start_date > end_date
 
-  [ start_date, end_date ]
+  [start_date, end_date]
 end
 
 def stream_file input_file
@@ -124,12 +123,12 @@ Usage: #{$PROGRAM_NAME} [-h|--help] [input-file] [start-date] [end-date]
 EOM
 
 opts = GetoptLong.new(
-  [ '--help', '-h', GetoptLong::NO_ARGUMENT ]
+  ['--help', '-h', GetoptLong::NO_ARGUMENT]
 )
 opts.quiet = true
 
 begin
-  opts.each { |opt, arg|
+  opts.each { |opt, _arg|
     case opt
     when '--help'
       puts USAGE
