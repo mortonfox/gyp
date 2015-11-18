@@ -11,14 +11,14 @@ require 'getoptlong'
 # Parse the logs table and extract only the cache finds.
 def parse_file io
   found_strings = ['found it', 'attended']
-  Nokogiri.HTML(io).css('table')[1].css('tr').map { |tr_elem|
-    if found_strings.include? tr_elem.css('img').first['title'].to_s.downcase
+  Nokogiri.HTML(io).css('table:nth-of-type(1) tr').map { |tr_elem|
+    if found_strings.include? tr_elem.at_css('img')['title'].to_s.downcase
       td_elems = tr_elem.css 'td'
 
       date_str = td_elems[1].text.strip
       date = Date.strptime date_str, '%m/%d/%Y'
 
-      cache_elem = td_elems[2].css('a').last
+      cache_elem = td_elems[2].at_css('a:last-of-type')
       cache_name = cache_elem.text.strip
       cache_link = cache_elem['href']
 
