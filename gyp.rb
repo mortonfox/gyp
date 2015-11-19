@@ -12,17 +12,17 @@ require 'getoptlong'
 def parse_file io
   found_strings = ['found it', 'attended']
   Nokogiri.HTML(io).css('table:nth-of-type(1) tr').map { |tr_elem|
-    if found_strings.include? tr_elem.at_css('img')['title'].to_s.downcase
+    if found_strings.include? tr_elem.at_css('img')['title'].downcase
       td_elems = tr_elem.css 'td'
 
-      date_str = td_elems[1].text.strip
+      date_str = td_elems[1].inner_text.strip
       date = Date.strptime date_str, '%m/%d/%Y'
 
-      cache_elem = td_elems[2].at_css('a:last-of-type')
-      cache_name = cache_elem.text.strip
+      cache_elem = td_elems[2].at_css 'a:last-of-type'
+      cache_name = cache_elem.inner_text.strip
       cache_link = cache_elem['href']
 
-      state = td_elems[3].text.strip
+      state = td_elems[3].inner_text.strip
 
       {
         date: date,
