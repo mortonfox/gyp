@@ -25,4 +25,17 @@ However, you can also specify a date range. For example:
 
     ruby gyp.rb yourprofile.htm 2014-01-01 2014-01-07
 
+## gyp\_oga.rb
+
+gyp\_oga.rb is an alternative script that uses [Oga](http://code.yorickpeterse.com/oga/latest/) instead of Nokogiri.
+
+To use it, first install the Oga gem:
+
+    gem install oga
+
+Then run it the same way as gyp.rb:
+
+    ruby gyp_oga.rb yourprofile.htm
+
+
 <!-- vim: set tw=0 -->
