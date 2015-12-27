@@ -13,7 +13,7 @@ Make sure you have the Nokogiri gem:
 
     gem install nokogiri
 
-First, log in to geocaching.com and download the "Your Profile" page at http://www.geocaching.com/my/
+First, log in to geocaching.com and download the "Your Profile" page at <http://www.geocaching.com/my/>
 
 Then run the script on it:
 
@@ -36,6 +36,5 @@ To use it, first install the Oga gem:
 Then run it the same way as gyp.rb:
 
     ruby gyp_oga.rb yourprofile.htm
-
 
 <!-- vim: set tw=0 -->
