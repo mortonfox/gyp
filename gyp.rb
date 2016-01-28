@@ -12,26 +12,25 @@ require 'getoptlong'
 def parse_file io
   found_strings = ['found it', 'attended']
   Nokogiri.HTML(io).css('table:nth-of-type(1) tr').map { |tr_elem|
-    if found_strings.include? tr_elem.at_css('img')['title'].downcase
-      td_elems = tr_elem.css 'td'
+    next unless found_strings.include? tr_elem.at_css('img')['title'].downcase
 
-      date_str = td_elems[1].inner_text.strip
-      date = Date.strptime date_str, '%m/%d/%Y'
+    td_elems = tr_elem.css 'td'
 
-      cache_elem = td_elems[2].at_css 'a:last-of-type'
-      cache_name = cache_elem.inner_text.strip
-      cache_link = cache_elem['href']
+    date_str = td_elems[1].inner_text.strip
+    date = Date.strptime date_str, '%m/%d/%Y'
 
-      state = td_elems[3].inner_text.strip
+    cache_elem = td_elems[2].at_css 'a:last-of-type'
+    cache_name = cache_elem.inner_text.strip
+    cache_link = cache_elem['href']
 
-      {
-        date: date,
-        name: cache_name,
-        state: state,
-        link: cache_link
-      }
-      # else nil
-    end
+    state = td_elems[3].inner_text.strip
+
+    {
+      date: date,
+      name: cache_name,
+      state: state,
+      link: cache_link
+    }
   }.compact.reverse
 end
 
@@ -46,21 +45,20 @@ def output_caches cache_list, start_date, end_date
 
   cache_list.each { |cache|
     date = cache[:date]
-    if date >= start_date and date <= end_date
+    next unless date >= start_date && date <= end_date
 
-      # Output a date header every time we get to a new day.
-      if date != curdate
-        puts <<-EOM
-
-#{date.strftime '%A %Y-%m-%d'}:
-
-        EOM
-        curdate = date
-      end
+    # Output a date header every time we get to a new day.
+    if date != curdate
       puts <<-EOM
-<a href=\"#{cache[:link]}\">#{cache[:name]} (#{cache[:state]})</a>
+
+      #{date.strftime '%A %Y-%m-%d'}:
+
       EOM
+      curdate = date
     end
+    puts <<-EOM
+<a href=\"#{cache[:link]}\">#{cache[:name]} (#{cache[:state]})</a>
+    EOM
   }
 
   puts <<-EOM
@@ -96,7 +94,7 @@ def get_date_range start_date_str, end_date_str
 end
 
 def stream_file input_file
-  if input_file and input_file != '-'
+  if input_file && input_file != '-'
     open(input_file) { |io|
       yield io
     }
@@ -105,7 +103,7 @@ def stream_file input_file
   end
 end
 
-USAGE = <<-EOM
+USAGE = <<-EOM.freeze
 Usage: #{$PROGRAM_NAME} [-h|--help] [input-file] [start-date] [end-date]
 
     input-file:
