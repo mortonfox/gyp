@@ -4,7 +4,7 @@
 # This version uses Oga instead of Nokogiri.
 #
 # Author: Po Shan Cheah http://mortonfox.com
-# Last updated: November 18, 2015
+# Last updated: February 2, 2016
 
 require 'oga'
 require 'date'
@@ -53,7 +53,7 @@ def output_caches cache_list, start_date, end_date
     if date != curdate
       puts <<-EOM
 
-      #{date.strftime '%A %Y-%m-%d'}:
+#{date.strftime '%A %Y-%m-%d'}:
 
       EOM
       curdate = date
@@ -136,8 +136,8 @@ begin
     end
   }
 rescue GetoptLong::Error => err
-  $stderr.puts "Error from GetoptLong: #{err}"
-  $stderr.puts USAGE
+  warn "Error from GetoptLong: #{err}"
+  warn USAGE
   exit 1
 end
 
