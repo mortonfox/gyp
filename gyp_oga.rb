@@ -22,7 +22,7 @@ def parse_file io
     date = Date.strptime date_str, '%m/%d/%Y'
 
     cache_elem = td_elems[2].at_css 'a:last-of-type'
-    cache_name = cache_elem.inner_text.strip
+    cache_name = cache_elem.text.strip
     cache_link = cache_elem.get 'href'
 
     state = td_elems[3].inner_text.strip
